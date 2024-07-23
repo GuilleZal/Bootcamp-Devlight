@@ -51,7 +51,7 @@ Console.WriteLine("Saliendo...");
 
 //Ejercicio 1: Dado un valor, devolver un mensaje que diga “El valor es mayor que 100”
 //sólo cuando se cumpla dicha condición.
-
+/*
 int numero;
 
 if (numero > 100)
@@ -61,7 +61,7 @@ if (numero > 100)
 
 Console.WriteLine("Ingrese un numero");
 numero = int.Parse(Console.ReadLine());
-if (numero mod 2) == 0
+if ((numero mod 2) == 0)
 {
     Console.WriteLine("El numero es par");
 }
@@ -69,12 +69,18 @@ else
 {
     Console.WriteLine("El numero es impar");
 }
-
+*/
 // Ejercicio 3: Teniendo un valor entero, verificar si se cumple o no que ese valor es el
 // doble de un impar. Por ejemplo, 14 cumple con esta condición.
-
-if (numero / 2)
-    Console.WriteLine("El valor es mayor que 100.");
+int numero;
+numero = 14;
+if (((numero / 2) Mod 2) == 0)
+{
+    Console.WriteLine("El valor no cumple la condicion");
+}else
+{
+    Console.WriteLine("El valor cumple la condicion");
+}
 
 
 
