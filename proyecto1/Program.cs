@@ -460,38 +460,83 @@ else
 //Ejercicio 20. Desarrolla un juego en el que el programa elija una palabra y el usuario
 //tenga que adivinarla letra por letra, con un límite de intentos.
 
+
+
 int numAle;
 int cont;
+int pos;
+int longitud;
 char letra;
 bool contiene;
+bool bandera;
 string texto;
-string[] palabras = ["auto", "camion", "serpiente", "lago", "casa"];
+string letrasIntent;
+string palabraDesc;
+string[] palabras = ["agua", "camion", "serpiente", "lago", "casa"];
+
 
 Random numRandom = new Random();
 numAle = numRandom.Next(0, 4);
 texto = palabras[numAle];
 contiene = false;
 cont = 0;
+letrasIntent= "";
 
-for(int i = 0; i < palabras[numAle].Length; i++)
+char[] textoDesc = new char[palabras[numAle].Length];
+
+for (int j = 0; j < palabras[numAle].Length; j++)
 {
-    Console.WriteLine($"Intento {i} de {palabras[numAle].Length}.");
-    Console.WriteLine("Ingrese una Letra");
-    letra = Console.ReadKey().KeyChar;
-    Console.WriteLine("\n");
+    textoDesc[j] = '_';
+}
+    for (int i = 0; i < palabras[numAle].Length; i++)
+{
+    do
+    {
+        bandera = false;
+        Console.WriteLine($"Intento {i} de {palabras[numAle].Length}.");
+        Console.WriteLine("Ingrese una Letra");
+        letra = Console.ReadKey().KeyChar;
+        Console.WriteLine("\n");
+
+        bandera = letrasIntent.Contains(letra);
+        if (bandera == true)
+        {
+            Console.WriteLine("Ya utilizaste esta letra, intenta con otra");
+        }
+    } while (bandera == true);
+
     contiene = texto.Contains(letra);
+
     if (contiene == true )
     {
-        cont = cont + 1;
         Console.WriteLine("Acertaste!");
+        for(int j = 0; j < palabras[numAle].Length; j++)
+        {
+            if (letra == palabras[numAle][j])
+            {
+                textoDesc[j] = (letra);
+                cont = cont + 1;
+                //pos = texto.IndexOf(letra);
+                //Console.WriteLine($"{pos}");
+            }
+            letrasIntent = letrasIntent + letra;
+        }
     }
     else
     {
         Console.WriteLine("Fallaste");
     }
+
+    palabraDesc = "";
+    for (int k = 0; k < palabras[numAle].Length; k++) //Muestro la palabra descubierta hasta el momento.
+    {
+        palabraDesc = palabraDesc + textoDesc[k];
+    }
+    Console.WriteLine($"{palabraDesc}");
     contiene = false;
 }
-if (cont == palabras[numAle].Length)
+
+if ( cont == palabras[numAle].Length)
 {
     Console.WriteLine("Felicidades, Adivinaste!.");
 }
@@ -509,4 +554,87 @@ else
 //tendrá 8 intentos. Si la forma de la palabra es AD_V_NA_ son 3 intentos
 
 
+int numAle;
+int cont;
+int pos;
+int longitud;
+char letra;
+bool contiene;
+bool bandera;
+string texto;
+string letrasIntent;
+string palabraDesc;
+string[] palabras = ["agua", "camion", "serpiente", "lago", "casa"];
 
+
+Random numRandom = new Random();
+numAle = numRandom.Next(0, 4);
+texto = palabras[numAle];
+contiene = false;
+cont = 0;
+letrasIntent = "";
+
+char[] textoDesc = new char[palabras[numAle].Length];
+
+for (int j = 0; j < palabras[numAle].Length; j++)
+{
+    textoDesc[j] = '_';
+}
+for (int i = 0; i < palabras[numAle].Length; i++)
+{
+    do
+    {
+        bandera = false;
+        Console.WriteLine($"Intento {i} de {palabras[numAle].Length}.");
+        Console.WriteLine("Ingrese una Letra");
+        letra = Console.ReadKey().KeyChar;
+        Console.WriteLine("\n");
+
+        bandera = letrasIntent.Contains(letra);
+        if (bandera == true)
+        {
+            Console.WriteLine("Ya utilizaste esta letra, intenta con otra");
+        }
+    } while (bandera == true);
+
+    contiene = texto.Contains(letra);
+
+    if (contiene == true)
+    {
+        Console.WriteLine("Acertaste!");
+        for (int j = 0; j < palabras[numAle].Length; j++)
+        {
+            if (letra == palabras[numAle][j])
+            {
+                textoDesc[j] = (letra);
+                cont = cont + 1;
+                //pos = texto.IndexOf(letra);
+                //Console.WriteLine($"{pos}");
+            }
+            letrasIntent = letrasIntent + letra;
+        }
+    }
+    else
+    {
+        Console.WriteLine("Fallaste");
+    }
+
+    palabraDesc = "";
+    for (int k = 0; k < palabras[numAle].Length; k++) //Muestro la palabra descubierta hasta el momento.
+    {
+        palabraDesc = palabraDesc + textoDesc[k];
+    }
+    Console.WriteLine($"{palabraDesc}");
+    contiene = false;
+    if (cont == palabras[numAle].Length)
+        break;
+}
+
+if (cont == palabras[numAle].Length)
+{
+    Console.WriteLine("Felicidades, Adivinaste!.");
+}
+else
+{
+    Console.WriteLine("Fallaste, Suerte la proxima.");
+}
