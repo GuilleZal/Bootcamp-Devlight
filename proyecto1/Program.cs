@@ -267,10 +267,20 @@ static void Ejercicio6()
     int lado2;
     int lado3;
     int cont;
-    int area;
+    int perimetro;
+    int altura;
+    int baseTriangulo;
+    double aux;
+    double area;
+
     Console.Clear();
     Console.WriteLine("Ejercicio 6: Escribir un programa que calcule el tipo de un triángulo conociendo la longitud de sus 3 lados. También que calcule su perímetro y su área.");
+    aux = 0;
+    area = 0;
     cont = 0;
+    altura = 0;
+    baseTriangulo = 0;
+
     Console.WriteLine("Ingrese el longitud del primer lado");
     lado1 = int.Parse(Console.ReadLine());
 
@@ -290,22 +300,43 @@ static void Ejercicio6()
         cont = cont + 1;
     if (lado2 == lado3)
         cont = cont + 1;
-    area = lado1 + lado2 + lado3;
+    perimetro = lado1 + lado2 + lado3;
     switch (cont)
     {
         case 0:
             Console.WriteLine("Es un triangulo ESCALENO");
+            aux = (lado1 + lado2 + lado3) / 2;
+            area = Math.Sqrt(aux * (aux - lado1) * (aux - lado2) * (aux - lado3));
             break;
         case 1:
             Console.WriteLine("Es un triangulo ISÓSCELES");
+            if (lado1 == lado2)
+            {
+                baseTriangulo = lado3;
+                altura = lado1;
+            }
+            else if (lado1 == lado3)
+            {
+                baseTriangulo = lado2;
+                altura = lado1;
+            }
+            else 
+            {
+                baseTriangulo = lado1;
+                altura = lado2;
+            }
+            
+            
+            area = (0.5 * baseTriangulo * altura);
             break;
         case 3:
             Console.WriteLine("Es un triangulo EQUILÁTERO");
+            area = (Math.Sqrt(3) / 4) * Math.Pow(lado1, 2);
             break;
         default:
             break;
     }
-
+    Console.WriteLine($"El perimetro es: {perimetro}");
     Console.WriteLine($"El area es: {area}");
 }
 
@@ -385,9 +416,6 @@ static void Ejercicio9()
     }
     Console.WriteLine($"La suma total es: {suma}");
 }
-
-
-
 
 
 static void Ejercicio10()
