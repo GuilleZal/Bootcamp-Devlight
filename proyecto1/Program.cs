@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics.Metrics;
 
+#region Menu
+
 int respuesta;
 bool validar;
 string pregunta;
@@ -93,6 +95,10 @@ do
     }
     
 } while (pregunta == "si");
+
+#endregion 
+
+#region Funciones
 
 static void Menu()
 {
@@ -893,6 +899,6 @@ static void Ejercicio21()
 }
 
 
-
+#endregion
 
 
