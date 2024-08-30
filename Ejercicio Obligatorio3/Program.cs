@@ -23,18 +23,26 @@ namespace Ejercicio_Obligatorio3
             EstacionMeteorologica estacion = new EstacionMeteorologica(Pasantes, Profesionales, Mes);
 
             Mes = estacion.CargarMatriz();
-            //estacion.VerMatriz(); //este metodo lo utilizaba para guiarme nada mas.
+            estacion.VerMatriz(); //este metodo lo utilizaba para guiarme nada mas.
+
+            Console.WriteLine("");
 
             estacion.RegistrarTemperatura();
-            //estacion.VerMatriz();
+            estacion.VerMatriz();
+
+            Console.WriteLine("");
 
             Console.WriteLine("Del 1 al 5, ingrese en que semana desea ver las temperaturas");
             int TemperaturasSem = int.Parse(Console.ReadLine());
             estacion.TemperaturasSemana(TemperaturasSem);
 
+            Console.WriteLine("");
+
             Console.WriteLine("Ingrese el dia para ver las temperaturas");
             int TemperaturasDia = int.Parse(Console.ReadLine());
             estacion.TemperaturasDia(TemperaturasDia);
+
+            Console.WriteLine("");
 
             Console.WriteLine("Promedio de temperaturas del Mes es: " + Calculos.CalcularTemperaturaPromedio(Mes)+"°");
 
