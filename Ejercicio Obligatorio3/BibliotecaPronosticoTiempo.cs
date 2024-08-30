@@ -74,9 +74,9 @@ namespace Ejercicio_Obligatorio3
         public Profesional[] Profesionales { get; set; }
         public RegistroTemperatura[,,] Mes {  get; set; }
 
-        public EstacionMeteorologica(Pasante[] pasante, Profesional[] profesional)
+        public EstacionMeteorologica(Pasante[] pasante, Profesional[] profesional, RegistroTemperatura[,,] mes )
         {
-            Mes = new RegistroTemperatura[5,7,3];
+            Mes = mes;
             Pasantes = pasante;
             Profesionales = profesional;
         }
@@ -124,24 +124,18 @@ namespace Ejercicio_Obligatorio3
                 {
                     for (int turno = 0; turno < Mes.GetLength(2); turno++)
                     {
-
-                        Random numRandom = new Random();
-                        int numAle = numRandom.Next(-10, 49);
+                        int numAle = Calculos.GenerarTemperatura();
                         if (turno == 0)
                         {
-                            Random numRandom2 = new Random();
-                            HoraTurno = numRandom2.Next(0, 7);
-                            
+                            HoraTurno = Calculos.ValorEntre(0,7); ;
                         }
                         else if (turno == 1)
                         {
-                            Random numRandom2 = new Random();
-                            HoraTurno = numRandom2.Next(8, 15);
+                            HoraTurno = Calculos.ValorEntre(8,15);
                         }
                         else if (turno == 2)
                         {
-                            Random numRandom2 = new Random();
-                            HoraTurno = numRandom2.Next(16, 23); ;
+                            HoraTurno = Calculos.ValorEntre(16,23);
                         }
 
                         DateTime fechahora = new DateTime(DateTime.Now.Year, DateTime.Now.Month, ContadorDias, HoraTurno, 50, 00);
@@ -163,12 +157,12 @@ namespace Ejercicio_Obligatorio3
                     }
                     ContadorDias++;
                     if (ContadorDias > 31)
-                        break;
+                        goto SalirDeLosBucles;
                 }
 
             }
-
-            return Mes;
+            SalirDeLosBucles:
+                return Mes;
         }
 
         private RegistroTemperatura[,,] ModificarMatriz()
@@ -177,8 +171,7 @@ namespace Ejercicio_Obligatorio3
             int Respuesta = int.Parse(Console.ReadLine());
             if (Respuesta == 1)
             {
-                Console.WriteLine("Ingrese la temperatura");
-                int Temperatura1 = int.Parse(Console.ReadLine());
+                int Temperatura1 = Calculos.GenerarTemperatura();
                 int Hora = DateTime.Now.Hour;
                 int ContadorDias = 1;
                 for (int semana = 0; semana < Mes.GetLength(0); semana++)
@@ -202,25 +195,27 @@ namespace Ejercicio_Obligatorio3
                                 Mes[semana, dia, 2].FechaHora = DateTime.Now;
                                 Mes[semana, dia, 2].TemperaturaRegistrada = Temperatura1;
                             }
-                            break;
+                            Console.WriteLine("Temperatura registrada con exito.");
+                            goto SalirDeLosBucles;
                         }
                         ContadorDias++;
                     }
                 }
             }
-            return Mes;
+            else
+                Console.WriteLine("No se ha registrado la temperatura.");
+            SalirDeLosBucles:
+                return Mes;
         }
 
         public void TemperaturasDia(int TempDia)
         {
-            
-
-            int ContadorDias = 1;
-            for (int semana = 0; semana < Mes.GetLength(0); semana++)
+            int ContadorDias = 0;
+            for (int semana = 0; semana < 5; semana++)
             {
-                for (int dia = 0; dia < Mes.GetLength(1); dia++)
+                for (int dia = 0; dia < 7; dia++)
                 {
-                    if (TempDia == ContadorDias)
+                    if (TempDia - 1 == ContadorDias)
                     {
                         Console.WriteLine($"La temperatura del dia {TempDia} es: " + Mes[semana, dia, 0].TemperaturaRegistrada + $" a las {Mes[semana, dia, 0].FechaHora.Hour} hs");
                         Console.WriteLine($"La temperatura del dia {TempDia} es: " + Mes[semana, dia, 1].TemperaturaRegistrada + $" a las {Mes[semana, dia, 1].FechaHora.Hour} hs");
@@ -235,12 +230,14 @@ namespace Ejercicio_Obligatorio3
         public void TemperaturasSemana(int TempSemana)
         {
             Console.WriteLine("Temperaturas de la semana: " + TempSemana + " del mes " + DateTime.Now.Month);
-            for (int dia = 0; dia < Mes.GetLength(1); dia++)
+            for (int dia = 0; dia < 7; dia++)
             {
                 Console.WriteLine("-------------------------------------------------");
-                Console.WriteLine($"La temperatura del dia {Mes[TempSemana, dia,0].FechaHora.Day} es: " + Mes[TempSemana, dia, 0].TemperaturaRegistrada + $" a las {Mes[TempSemana, dia, 0].FechaHora.Hour} hs");
-                Console.WriteLine($"La temperatura del dia {Mes[TempSemana, dia, 1].FechaHora.Day} es: " + Mes[TempSemana, dia, 1].TemperaturaRegistrada + $" a las {Mes[TempSemana, dia, 1].FechaHora.Hour} hs");
-                Console.WriteLine($"La temperatura del dia {Mes[TempSemana, dia, 2].FechaHora.Day} es: " + Mes[TempSemana, dia, 2].TemperaturaRegistrada + $" a las {Mes[TempSemana, dia, 2].FechaHora.Hour} hs");
+                Console.WriteLine($"La temperatura del dia {Mes[TempSemana - 1, dia, 0].FechaHora.Day} es: " + Mes[TempSemana - 1, dia, 0].TemperaturaRegistrada + $" a las {Mes[TempSemana - 1, dia, 0].FechaHora.Hour} hs");
+                Console.WriteLine($"La temperatura del dia {Mes[TempSemana - 1, dia, 1].FechaHora.Day} es: " + Mes[TempSemana - 1, dia, 1].TemperaturaRegistrada + $" a las {Mes[TempSemana - 1, dia, 1].FechaHora.Hour} hs");
+                Console.WriteLine($"La temperatura del dia {Mes[TempSemana - 1, dia, 2].FechaHora.Day} es: " + Mes[TempSemana - 1, dia, 2].TemperaturaRegistrada + $" a las {Mes[TempSemana - 1, dia, 2].FechaHora.Hour} hs");
+                if ((TempSemana == 5) && (dia == 2)) //Si entra aca es porque es el dia 31 y no debe pasar de ahi
+                    break;   
             }
         }
 
@@ -269,12 +266,61 @@ namespace Ejercicio_Obligatorio3
 
                     ContadorDias++;
                     if (ContadorDias > 31)
-                        break;
+                        return;
                 }
             }
         }
-        
     }
 
+    public static class Calculos
+    {
+        // Un método estático para calcular la temperatura promedio
+        public static double CalcularPromedio(int[] temperaturas)
+        {
+            int suma = 0;
+            for (int i = 0; i < temperaturas.Length; i++)
+            {
+                suma += temperaturas[i];
+            }
+            return (double)suma / temperaturas.Length;
+        }
 
+        public static int GenerarTemperatura()
+        {
+            Random numRandom = new Random();
+            return numRandom.Next(-10, 49);
+        }
+
+        public static int ValorEntre(int valor1, int valor2)
+        {
+            Random numRandom = new Random();
+            return numRandom.Next(valor1, valor2);
+        }
+
+        public static int CalcularTemperaturaPromedio(RegistroTemperatura[,,] mes)
+        {
+            int Promedio = 0;
+            int temperaturas = 0;
+            int ContadorDias = 1;
+
+            for (int semana = 0; semana < mes.GetLength(0); semana++)
+            {
+                for (int dia = 0; dia < mes.GetLength(1); dia++)
+                {
+                    for (int turno = 0; turno < mes.GetLength(2); turno++)
+                    {
+                        temperaturas = temperaturas + mes[semana, dia, turno].TemperaturaRegistrada;
+
+                    }
+                    ContadorDias++;
+                    if (ContadorDias > 31)
+                        goto SalirDeLosBucles;
+                }
+
+            }
+        SalirDeLosBucles:
+            Promedio = (temperaturas/ (31 * 3));
+            return Promedio;
+        }
+    }
 }

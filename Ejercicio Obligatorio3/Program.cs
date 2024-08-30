@@ -11,6 +11,7 @@ namespace Ejercicio_Obligatorio3
         {
             Profesional[] Profesionales = new Profesional[3];
             Pasante[] Pasantes = new Pasante[3];
+            RegistroTemperatura [,,] Mes = new RegistroTemperatura[5, 7, 3];
 
             Pasantes[0] = new Pasante("Juan", "Espinoza", 28, 24536);
             Pasantes[1] = new Pasante("Carlos", "Mendez", 24, 22532);
@@ -19,9 +20,9 @@ namespace Ejercicio_Obligatorio3
             Profesionales[1] = new Profesional("Guille", "Ramirez", 29, 16234);
             Profesionales[2] = new Profesional("Valeria", "Cerutti", 25, 28214);
             
-            EstacionMeteorologica estacion = new EstacionMeteorologica(Pasantes, Profesionales);
+            EstacionMeteorologica estacion = new EstacionMeteorologica(Pasantes, Profesionales, Mes);
 
-            estacion.CargarMatriz();
+            Mes = estacion.CargarMatriz();
             //estacion.VerMatriz(); //este metodo lo utilizaba para guiarme nada mas.
 
             estacion.RegistrarTemperatura();
@@ -34,6 +35,9 @@ namespace Ejercicio_Obligatorio3
             Console.WriteLine("Ingrese el dia para ver las temperaturas");
             int TemperaturasDia = int.Parse(Console.ReadLine());
             estacion.TemperaturasDia(TemperaturasDia);
+
+            Console.WriteLine("Promedio de temperaturas del Mes es: " + Calculos.CalcularTemperaturaPromedio(Mes)+"°");
+
 
         }
     }
